@@ -1,4 +1,4 @@
-
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const _ = require("lodash");
@@ -15,7 +15,7 @@ app.use(express.static("public"));
 
 
 async function main() {
-  await mongoose.connect("mongodb+srv://admin-meet:Test123@todolist.llctn.mongodb.net/todolistDB");
+  await mongoose.connect(process.env.MONGODB_URI);
 };
 
 const itemsSchema = new mongoose.Schema({
@@ -54,6 +54,7 @@ app.get("/", function(req, res) {
               console.log("Data inserted successfully!");
             }
           });
+         res.redirect("/");
         } else {
           res.render("list", {listTitle: "Today", newListItems: foundItems});
           }
